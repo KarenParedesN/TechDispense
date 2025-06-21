@@ -19,13 +19,11 @@ ejecutaServicio(function () {
   $cantidad = htmlentities($modelo[DIS_CANTIDAD]);
   $render .=
    "<dl>
-      <li>
-        <p>
-        <a href='modifica.html?id=$id'>$producto</a> <br>
-        <a>Cantidad: $cantidad</a>
-        </p>
-      </li>
-    </dl>";
+      <dt><a href='modifica.html?id=$id'>$producto</a></dt>
+      <dd>Marca: $marca</dd>
+      <dd>Cantidad: $cantidad</dd>
+    </dl>
+";
  }
 
  devuelveJson(["lista" => ["innerHTML" => $render]]);
