@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width">
+
+ <title>Agregar</title>
+
+ <script type="module" src="lib/js/submitForm.js"></script>
+ <script type="module" src="lib/js/muestraError.js"></script>
+
+</head>
+
+<body>
+
+ <form onsubmit="submitForm('srv/dispensador-agrega.php', event)
+    .then(modelo => location.href = 'index.html')
+    .catch(muestraError)">
+
+  <h1>Agregar</h1>
+
+  <p><a href="index.html">Cancelar</a></p>
+
+  <p>
+   <label>
+    Producto *
+    <input name="producto">
+   </label>
+  </p>
+
+  <p>* Obligatorio</p>
+
+  <p>
+   <label>
+    Marca *
+    <input name="marca">
+   </label>
+  </p>
+
+  <p>* Obligatorio</p>
+
+  <p>
+   <label>
+    Cantidad *
+    <input name="cantidad">
+   </label>
+  </p>
+
+  <p>* Obligatorio</p>
+
+  <p><button type="submit">Agregar</button></p>
+
+ </form>
+
+</body>
+
+</html>

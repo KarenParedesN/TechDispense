@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+ <meta charset="UTF-8">
+ <meta name="viewport"
+   content="width=device-width">
+
+ <title>Modificar</title>
+
+ <script type="module" src="lib/js/consumeJson.js"></script>
+ <script type="module" src="lib/js/submitForm.js"></script>
+ <script type="module" src="lib/js/muestraObjeto.js"></script>
+ <script type="module" src="lib/js/muestraError.js"></script>
+
+ <script>
+  // Obtiene los parámetros de la página.
+  const params = new URL(location.href).searchParams
+ </script>
+
+</head>
+
+<body onload="if (params.size > 0) {
+   consumeJson('srv/dispensador.php?' + params)
+    .then(respuesta => muestraObjeto(forma, respuesta.body))
+    .catch(muestraError)
+  }">
+ <form id="forma" onsubmit="submitForm('srv/dispensador-modifica.php', event)
+    .then(respuesta => location.href = 'index.html')
+    .catch(muestraError)" >
+
+  <h1>Modificar</h1>
+
+  <p><a href="index.html">Cancelar</a></p>
+
+  <input name="id" type="hidden">
+
+  <p>
+   <label>
+    Producto *
+    <input name="producto" value="Cargando&hellip;">
+   </label>
+  </p>
+
+  <p>* Obligatorio</p>
+
+  <p>
+   <label>
+    Marca *
+    <input name="marca" value="Cargando&hellip;">
+   </label>
+  </p>
+
+  <p>* Obligatorio</p>
+
+  <p>
+   <label>
+    Cantidad *
+    <input name="cantidad" value="Cargando&hellip;">
+   </label>
+  </p>
+
+  <p>* Obligatorio</p>
+
+  <p>
+
+   <button type="submit">Guardar</button>
+
+   <button type="button" onclick="
+     if (params.size > 0 && confirm('Confirma la eliminación')) {
+      consumeJson('srv/dispensador-elimina.php?' + params)
+       .then(() => location.href = 'index.html')
+       .catch(muestraError)
+     }">
+    Eliminar
+   </button>
+
+  </p>
+
+ </form>
+
+</body>
+
+</html>
