@@ -1,31 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width">
-
- <title>Acceso a base de datos</title>
-
- <script type="module" src="lib/js/consumeJson.js"></script>
- <script type="module" src="lib/js/muestraObjeto.js"></script>
- <script type="module" src="lib/js/muestraError.js"></script>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cuestionario</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="manifest" href="./manifest.json">
 </head>
+<body>
+<div class="form-wrapper">
+  <h1>Cuestionario</h1>
+<form id="formulario"></form>
+<button id="enviar">Enviar respuestas</button>
 
-<body onload="consumeJson('srv/dispensadores.php')
-   .then(respuesta => muestraObjeto(document, respuesta.body))
-   .catch(muestraError)">
-
- <h1>Acceso a base de datos</h1>
-
- <p><a href="agrega.html">Agregar</a></p>
-
- <ul id="lista">
-  <li><progress max="100">Cargando&hellip;</progress></li>
- </ul>
-
+<script src="./preguntas.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(reg => console.log('SW registrado:', reg))
+      .catch(err => console.error('Error SW:', err));
+  }
+</script>
 </body>
-
 </html>
