@@ -1,7 +1,0 @@
-<?php
-
-const DISPENSADOR = "DISPENSADOR";
-const DIS_ID = "DIS_ID";
-const DIS_MARCA = "DIS_MARCA";
-const DIS_PRODUCTO = "DIS_PRODUCTO";
-const DIS_CANTIDAD = "DIS_CANTIDAD";
