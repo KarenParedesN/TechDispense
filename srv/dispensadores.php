@@ -20,7 +20,7 @@ ejecutaServicio(function () {
   $render .=
    "<dl>
       <dt><a href='modifica.html?id=$id'>$producto</a></dt>
-      <dd>Marca: $marca</dd>
+      <dd>$marca</dd>
       <dd>Cantidad: $cantidad</dd>
     </dl>
 ";

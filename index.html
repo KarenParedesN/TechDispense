@@ -3,29 +3,34 @@
 
 <head>
 
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
 
- <title>Acceso a base de datos</title>
+    <title>Inicio</title>
 
- <script type="module" src="lib/js/consumeJson.js"></script>
- <script type="module" src="lib/js/muestraObjeto.js"></script>
- <script type="module" src="lib/js/muestraError.js"></script>
+    <script type="module" src="lib/js/muestraError.js"></script>
+    <script type="module" src="./js/protege.js"></script>
+    <script type="module" src="./js/custom/mi-nav.js"></script>
+    <link rel="manifest" href="/manifest.json">
 
 </head>
 
-<body onload="consumeJson('srv/dispensadores.php')
-   .then(respuesta => muestraObjeto(document, respuesta.body))
-   .catch(muestraError)">
+<body>
+    <h1>TechDispense</h1>
 
- <h1>Acceso a base de datos</h1>
-
- <p><a href="agrega.html">Agregar</a></p>
-
- <ul id="lista">
-  <li><progress max="100">Cargando&hellip;</progress></li>
- </ul>
+    <p>Bienvenid@.</p>
+    <a id="login" href="login.html">Iniciar sesión</a>
 
 </body>
+<script>
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+            navigator.serviceWorker.register("./sw.js")
+                .then(reg => console.log("Service Worker registrado", reg))
+                .catch(err => console.error("Error al registrar el SW", err));
+        });
+    }
+
+</script>
 
 </html>

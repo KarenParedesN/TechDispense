@@ -15,7 +15,6 @@
  <script type="module" src="lib/js/muestraError.js"></script>
 
  <script>
-  // Obtiene los parámetros de la página.
   const params = new URL(location.href).searchParams
  </script>
 
@@ -27,12 +26,12 @@
     .catch(muestraError)
   }">
  <form id="forma" onsubmit="submitForm('srv/dispensador-modifica.php', event)
-    .then(respuesta => location.href = 'index.html')
+    .then(respuesta => location.href = 'admin.html')
     .catch(muestraError)" >
 
   <h1>Modificar</h1>
 
-  <p><a href="index.html">Cancelar</a></p>
+  <p><a href="admin.html">Cancelar</a></p>
 
   <input name="id" type="hidden">
 
@@ -70,7 +69,7 @@
    <button type="button" onclick="
      if (params.size > 0 && confirm('Confirma la eliminación')) {
       consumeJson('srv/dispensador-elimina.php?' + params)
-       .then(() => location.href = 'index.html')
+       .then(() => location.href = 'admin.html')
        .catch(muestraError)
      }">
     Eliminar
