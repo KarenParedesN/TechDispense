@@ -1,0 +1,106 @@
+/* ==== Reset básico ==== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+h1{
+  text-align: center;
+} 
+.form-wrapper {
+  max-width: 600px;
+  margin: auto;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f1f3f6;
+  color: #333;
+  padding: 20px;
+}
+
+/* ==== Contenedor del formulario ==== */
+form {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  max-width: 600px;
+  margin: auto;
+}
+
+/* ==== Preguntas individuales ==== */
+form div {
+  margin-bottom: 20px;
+}
+
+/* ==== Etiquetas ==== */
+form label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* ==== Inputs ==== */
+form input[type="text"],
+form input[type="number"],
+form input[type="email"],
+form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+form input:focus,
+form textarea:focus {
+  border-color: #2196f3;
+  outline: none;
+}
+
+/* ==== Botón de enviar ==== */
+#enviar {
+  display: block;
+  width: 100%;
+  background: #2196f3;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#enviar:hover {
+  background: #1976d2;
+}
+button {
+  padding: 8px 12px;
+  margin-top: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  background-color: #4CAF50;
+  color: white;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+table th, table td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ccc;
+}
+/* ==== Responsive ==== */
+@media screen and (max-width: 480px) {
+  form {
+    padding: 15px;
+  }
+}
