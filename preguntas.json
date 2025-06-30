@@ -1,0 +1,10 @@
+[
+  {
+    "id": "p1",
+    "pregunta": "¿Cuál es tu nombre?"
+  },
+  {
+    "id": "p2",
+    "pregunta": "¿Cuál es tu color favorito?"
+  }
+]
