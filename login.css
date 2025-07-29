@@ -1,0 +1,276 @@
+:root {
+    --primary-dark-blue: #0E2F73;
+    --secondary-blue: #3498db;
+    --light-bg: #f0f2f5;
+    --white: #ffffff;
+    --border-color: #e0e0e0;
+    --input-bg-focus: #e6f2ff;
+    --text-placeholder: #6c757d;
+    --button-hover-dark: #232840;
+    --header-blue: #007bff;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: linear-gradient(to bottom, var(--primary-dark-blue) 50%, var(--light-bg) 50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--primary-dark-blue);
+    overflow: hidden;
+}
+
+.top-header-section {
+    width: 100%;
+    height: 60vh; 
+    background-color: var(--header-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+
+.settings-icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: var(--white);
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.settings-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: var(--white);
+}
+
+.login-logo {
+    max-width: 300px; 
+    height: auto;
+    margin-bottom: 0;
+    display: block;
+}
+
+.formulario {
+    background-color: var(--white);
+    padding: 40px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.15);
+    width: 80%;
+    max-width: 480px;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    margin-top: -15vh; 
+    position: relative;
+    z-index: 10;
+}
+
+h1 {
+    font-size: 2.2em;
+    color: var(--primary-dark-blue);
+    margin-bottom: 35px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--secondary-blue);
+    border-radius: 2px;
+}
+
+.user {
+    position: relative;
+    margin-bottom: 30px;
+    text-align: left;
+    width: 100%;
+    max-width: 350px;
+}
+
+.user input {
+    width: calc(100% - 40px);
+    padding: 12px 10px 12px 40px;
+    border: none;
+    border-bottom: 2px solid var(--border-color);
+    background-color: transparent;
+    font-size: 1.1em;
+    color: var(--primary-dark-blue);
+    outline: none;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.user input:focus {
+    border-color: var(--secondary-blue);
+    background-color: var(--input-bg-focus);
+}
+
+.user label {
+    position: absolute;
+    top: 12px;
+    left: 40px;
+    color: var(--text-placeholder);
+    font-size: 1.1em;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.user input:focus + label,
+.user input:not(:placeholder-shown) + label {
+    top: -18px;
+    font-size: 0.8em;
+    color: var(--secondary-blue);
+}
+
+.user img {
+    position: absolute;
+    top: 10px;
+    left: 8px;
+    width: 24px;
+    height: 24px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.user input:focus + label + img,
+.user input:not(:placeholder-shown) + label + img {
+    opacity: 1;
+}
+
+.user span {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--secondary-blue);
+    transition: width 0.3s ease;
+}
+
+.user input:focus ~ span {
+    width: 100%;
+}
+
+p button[type="submit"] {
+    background-color: var(--primary-dark-blue);
+    color: var(--white);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 600;
+    width: 100%;
+    max-width: 350px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    margin-top: 20px;
+}
+
+p button[type="submit"]:hover {
+    background-color: var(--button-hover-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+p button[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 0;
+    }
+
+    .top-header-section {
+        height: 45vh; 
+        padding-top: 15px;
+    }
+
+    .settings-icon {
+        top: 15px;
+        left: 15px;
+        width: 24px;
+        height: 24px;
+    }
+
+    .login-logo {
+        max-width: 220px; 
+    }
+
+    .formulario {
+        padding: 30px 20px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        padding-top: 40px;
+        margin-top: -10vh; 
+    }
+
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .user {
+        margin-bottom: 25px;
+        max-width: 100%;
+    }
+
+    .user input {
+        padding: 10px 10px 10px 35px;
+        font-size: 1em;
+    }
+
+    .user label {
+        top: 10px;
+        left: 35px;
+        font-size: 1em;
+    }
+
+    .user input:focus + label,
+    .user input:not(:placeholder-shown) + label {
+        top: -15px;
+        font-size: 0.7em;
+    }
+
+    .user img {
+        top: 8px;
+        left: 5px;
+        width: 20px;
+        height: 20px;
+    }
+
+    p button[type="submit"] {
+        padding: 12px 20px;
+        font-size: 1.1em;
+        border-radius: 6px;
+        max-width: 100%;
+    }
+}

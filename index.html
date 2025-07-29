@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+
+  <title>Iniciar sesión</title>
+  <script type="module" src="js/registraServiceWorker.js"></script>
+  <script type="module" src="lib/js/submitForm.js"></script>
+  <script type="module" src="lib/js/muestraError.js"></script>
+  <script type="module" src="./js/protege.js"></script>
+  <link rel="stylesheet" href="./css/login.css">
+  <link rel="manifest" href="site.webmanifest">
+
+</head>
+
+<body onload="protege().then(sesion => {
+   if (sesion.cue !== '') {
+    location.href = 'dispensadores.html'
+   }
+  })">
+
+    <img class="login-logo" src="img/techDispense.png" alt="">
+  <div class="formulario">
+    <h1>INICIAR SESIÓN</h1>
+    <form id="login" onsubmit="submitForm('srv/login.php', event)
+   .then(sesion => location.href = 'perfil.html')
+   .catch(muestraError)">
+
+      <div class="user">
+        <input name="cue" placeholder=" ">
+        <label>
+          Cue
+        </label>
+        <img src="icons/mail.svg" alt="cue">
+        <span></span>
+      </div>
+
+      <div class="user">
+        <input type="password" name="match" placeholder=" ">
+        <label>
+          Match
+        </label>
+        <img src="icons/pass.svg" alt="pass">
+        <span></span>
+      </div>
+
+      <p><button type="submit">Iniciar sesión</button></p>
+
+    </form>
+  </div>
+
+</body>
+
+</html>
