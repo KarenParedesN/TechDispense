@@ -1,0 +1,339 @@
+:root {
+    --primary-blue: #3498db;
+    --dark-blue: #2c3e50;
+    --light-gray: #f8f9fa;
+    --medium-gray: #e9ecef;
+    --text-dark: #343a40;
+    --text-light: #6c757d;
+    --accent-green: #2ecc71;
+    --accent-orange: #e67e22;
+    --header-bg-table: #34495e;
+    --row-hover-table: #e6f2ff;
+}
+
+html, body {
+    height: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--light-gray);
+    margin: 0;
+    color: var(--text-dark);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    padding-top: 60px;
+    padding-bottom: 4rem;
+}
+
+main {
+    flex-grow: 1;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    overflow-x: auto;
+}
+
+main h1 {
+    text-align: center;
+    font-size: 2.2rem;
+    color: var(--dark-blue);
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--primary-blue);
+    padding-bottom: 10px;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+form label {
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+}
+
+form input[type="date"] {
+    padding: 10px 15px;
+    border: 1px solid var(--medium-gray);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    flex-grow: 1;
+    max-width: 180px;
+}
+
+form input[type="date"]:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    outline: none;
+}
+
+form input[type="submit"] {
+    background-color: var(--accent-orange);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+form input[type="submit"]:hover {
+    background-color: #d66c11;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+ul#listaEncuesta {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    min-height: 100px;
+}
+
+ul#listaEncuesta li progress {
+    width: 80%;
+    max-width: 300px;
+    height: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: block;
+    margin: 0 auto;
+}
+
+ul#listaEncuesta li progress::-webkit-progress-bar {
+    background-color: var(--medium-gray);
+    border-radius: 10px;
+}
+ul#listaEncuesta li progress::-webkit-progress-value {
+    background-color: var(--primary-blue);
+    border-radius: 10px;
+}
+ul#listaEncuesta li progress::-moz-progress-bar {
+    background-color: var(--primary-blue);
+    border-radius: 10px;
+}
+
+ul#listaEncuesta table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin: 0;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    table-layout: fixed;
+}
+
+ul#listaEncuesta thead {
+    background-color: var(--header-bg-table);
+    color: white;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+ul#listaEncuesta th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: none; 
+    width: 15%; 
+    width: 35%; 
+    width: 15%; 
+    width: 15%; 
+    width: 20%; 
+}
+
+ul#listaEncuesta tbody tr {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+    border: 1px solid var(--medium-gray);
+}
+
+ul#listaEncuesta tbody tr:hover {
+    background-color: var(--row-hover-table);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+ul#listaEncuesta tbody tr:nth-child(even) {
+    background-color: var(--light-gray);
+}
+ul#listaEncuesta tbody tr:nth-child(even):hover {
+    background-color: var(--row-hover-table);
+}
+
+ul#listaEncuesta td {
+    padding: 10px 15px;
+    vertical-align: middle;
+    color: var(--text-dark);
+    font-size: 0.85rem;
+    border-bottom: none;
+    word-break: break-word;
+}
+
+ul#listaEncuesta td:last-child {
+    text-align: left;
+    width: auto;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 50px;
+        padding-bottom: 60px;
+    }
+
+    main {
+        padding: 15px;
+    }
+
+    main h1 {
+        font-size: 1.8rem;
+        margin-bottom: 25px;
+    }
+
+    form {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+    }
+
+    form label {
+        margin-bottom: 5px;
+    }
+
+    form input[type="date"],
+    form input[type="submit"] {
+        width: 100%;
+        max-width: none;
+    }
+
+    ul#listaEncuesta table {
+        border-spacing: 0;
+        box-shadow: none;
+        border-radius: 0;
+        margin: 0;
+        width: 100%;
+        padding: 0;
+    }
+
+    ul#listaEncuesta thead {
+        display: none;
+    }
+
+    ul#listaEncuesta tbody, 
+    ul#listaEncuesta tr, 
+    ul#listaEncuesta td {
+        display: block;
+        width: 100%;
+    }
+
+    ul#listaEncuesta tbody tr {
+        margin-bottom: 15px;
+        border: 1px solid var(--medium-gray);
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 15px;
+    }
+
+    ul#listaEncuesta td {
+        text-align: right;
+        padding: 8px 15px;
+        position: relative;
+        border-bottom: 1px dashed var(--medium-gray);
+        font-size: 0.8rem;
+    }
+
+    ul#listaEncuesta td:last-child {
+        border-bottom: none;
+        text-align: right;
+        padding-top: 10px;
+    }
+
+    ul#listaEncuesta td::before {
+        content: attr(data-titulo);
+        position: absolute;
+        left: 15px;
+        font-weight: 600;
+        color: var(--dark-blue);
+        text-transform: uppercase;
+        font-size: 0.7rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 45px;
+        padding-bottom: 55px;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    main h1 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    form {
+        padding: 15px;
+        gap: 10px;
+    }
+
+    form input[type="date"],
+    form input[type="submit"] {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+
+    ul#listaEncuesta tbody tr {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    ul#listaEncuesta td {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+    }
+
+    ul#listaEncuesta td::before {
+        left: 10px;
+        font-size: 0.65rem;
+    }
+}

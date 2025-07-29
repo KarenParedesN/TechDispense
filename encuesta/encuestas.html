@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    <title>Solo Clientes</title>
+
+    <script type="module" src="lib/js/consumeJson.js"></script>
+    <script type="module" src="lib/js/muestraError.js"></script>
+    <script type="module" src="lib/js/muestraObjeto.js"></script>
+    <script type="module" src="./js/ROL_ID_CLIENTE.js"></script>
+    <script type="module" src="./js/protege.js"></script>
+    <script type="module" src="./js/custom/mi-nav.js"></script>
+    <link rel="stylesheet" href="./css/cliente.css">
+    <link rel="stylesheet" href="css/encuesta.css">
+
+</head>
+
+<body onload="consumeJson('srv/dispensadoresCliente.php')
+   .then(respuesta => muestraObjeto(document, respuesta.body))
+   .catch(muestraError),consumeJson('srv/encuestasCliente.php')
+   .then(respuesta => muestraObjeto(document, respuesta.body))
+   .catch(muestraError) , consumeJson('srv/usuarios.php'), protege(nav, [ROL_ID_CLIENTE])
+  .then(sesion => main.hidden = false)">
+
+    <mi-nav id="nav"></mi-nav>
+    <main id="main" hidden>
+        <h1>Encuestas</h1>
+
+        <form action="./srv/reporte.php" method="post">
+            <label for="">Generar reporte de: </label>
+            <input type="date" name="fecha1">
+            <label for="">a: </label>
+            <input type="date" name="fecha2">
+            <input type="submit" name="reporte" value="Reporte">
+        </form>
+        <ul id="listaEncuesta">
+            <li><progress max="100">Cargando&hellip;</progress></li>
+        </ul>
+    </main>
+</body>
+
+</html>

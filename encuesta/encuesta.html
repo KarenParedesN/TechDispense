@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Encuesta de Satisfacción</title>
+    <script type="module" src="lib/js/submitForm.js"></script>
+    <script type="module" src="lib/js/muestraError.js"></script>
+    <script type="module" src="lib/js/muestraObjeto.js"></script>
+    <script type="module" src="lib/js/consumeJson.js"></script>
+    <script src="paho.javascript-1.0.3/paho-mqtt-min.js"></script>
+    <style>
+        :root {
+            --primary-blue: #0056b3;
+            --dark-gray: #333;
+            --light-gray-bg: #f4f4f4;
+            --white: #ffffff;
+            --border-color: #ddd;
+            --button-success: #28a745;
+            --button-success-hover: #218838;
+            --error-red: #dc3545;
+            --info-blue: #17a2b8;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--light-gray-bg);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            margin: auto;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-blue);
+            margin-bottom: 25px;
+            font-size: 2em;
+        }
+
+        fieldset {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #fcfcfc;
+        }
+
+        legend {
+            font-weight: bold;
+            color: var(--dark-gray);
+            padding: 0 10px;
+            font-size: 1.1em;
+        }
+
+        .radio-group p {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: var(--dark-gray);
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 10px;
+            width: auto;
+            margin-bottom: 0;
+        }
+
+        .radio-option label {
+            margin-bottom: 0;
+            font-weight: normal;
+            color: var(--dark-gray);
+            cursor: pointer;
+            flex-grow: 1;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            font-size: 1em;
+            resize: vertical;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
+            outline: none;
+        }
+
+        button {
+            background-color: var(--button-success);
+            color: var(--white);
+            padding: 14px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: var(--button-success-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        #mensajeEnvio {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+
+        .custom-message-box {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .custom-message-content {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-sizing: border-box;
+        }
+
+        .custom-message-content h2 {
+            margin-top: 0;
+            color: var(--primary-blue);
+        }
+
+        .custom-message-content p {
+            margin-bottom: 20px;
+            color: var(--dark-gray);
+        }
+
+        .custom-message-content button {
+            background-color: var(--info-blue);
+            width: auto;
+            padding: 10px 20px;
+            font-size: 1em;
+        }
+
+        .custom-message-content button:hover {
+            background-color: #138496;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px;
+                border-radius: 8px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+
+            fieldset {
+                padding: 10px;
+            }
+
+            legend {
+                font-size: 1em;
+            }
+
+            input[type="text"],
+            textarea {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+
+            button {
+                padding: 10px 15px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Encuesta</h1>
+        <form id="surveyForm">
+
+            <p>Producto: </p>
+            <fieldset class="radio-group">
+                <legend>¿Con qué frecuencia usas productos similares al nuestro?</legend>
+                <input type="hidden" name="disId" id="disId" value="">
+
+                <div class="radio-option">
+                    <input type="radio" id="diario" name="calificacion" value="A diario" required>
+                    <label for="diario">A diario</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="semana" name="calificacion" value="Varias veces por semana">
+                    <label for="semana">Varias veces por semana</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="ocasionalmente" name="calificacion" value="Ocasionalmente">
+                    <label for="ocasionalmente">Ocasionalmente</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="nunca" name="calificacion" value="Nunca">
+                    <label for="nunca">Nunca</label>
+                </div>
+            </fieldset>
+
+            <label for="comentarios">Comentarios (Opcional):</label>
+            <textarea id="comentarios" name="comentarios" rows="4"
+                placeholder="Escribe tus comentarios aquí..."></textarea>
+
+            <button type="submit">Enviar Encuesta</button>
+        </form>
+        <div id="mensajeEnvio" style="display:none;">¡Gracias por completar la encuesta!</div>
+    </div>
+
+    <div id="customMessageBox" class="custom-message-box">
+        <div class="custom-message-content">
+            <h2 id="messageBoxTitle"></h2>
+            <p id="messageBoxText"></p>
+            <button onclick="hideMessageBox()">Aceptar</button>
+        </div>
+    </div>
+
+    <script type="module">
+        const PRIMARY_BLUE = getComputedStyle(document.documentElement).getPropertyValue('--primary-blue');
+        const ERROR_RED = getComputedStyle(document.documentElement).getPropertyValue('--error-red');
+        const INFO_BLUE = getComputedStyle(document.documentElement).getPropertyValue('--info-blue');
+
+        const params = new URL(location.href).searchParams;
+
+        function showMessageBox(title, message, type = 'info') {
+            const messageBox = document.getElementById('customMessageBox');
+            const messageTitle = document.getElementById('messageBoxTitle');
+            const messageText = document.getElementById('messageBoxText');
+            const messageButton = document.getElementById('messageBoxButton');
+
+            messageTitle.textContent = title;
+            messageText.textContent = message;
+
+            if (type === 'error') {
+                messageTitle.style.color = ERROR_RED;
+                messageButton.style.backgroundColor = ERROR_RED;
+                messageButton.onmouseover = () => messageButton.style.backgroundColor = '#c82333';
+                messageButton.onmouseout = () => messageButton.style.backgroundColor = ERROR_RED;
+            } else {
+                messageTitle.style.color = PRIMARY_BLUE;
+                messageButton.style.backgroundColor = INFO_BLUE;
+                messageButton.onmouseover = () => messageButton.style.backgroundColor = '#138496';
+                messageButton.onmouseout = () => messageButton.style.backgroundColor = INFO_BLUE;
+            }
+
+            messageBox.style.display = 'flex';
+        }
+
+        function hideMessageBox() {
+            document.getElementById('customMessageBox').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const disIdFromUrl = params.get('disId');
+            const disIdInput = document.getElementById('disId');
+            const submitButton = document.getElementById('surveyForm').querySelector('button[type="submit"]');
+
+            if (disIdFromUrl) {
+                disIdInput.value = disIdFromUrl;
+                console.log("DEBUG (Frontend): DIS_ID asignado desde URL:", disIdFromUrl);
+            } else {
+                console.warn("ADVERTENCIA (Frontend): DIS_ID no encontrado en la URL. Asegúrate de pasarlo como ?disId= al acceder a la encuesta.");
+                showMessageBox('Error de Dispensador', 'No se pudo identificar el dispensador. La encuesta no se puede guardar.', 'error');
+                submitButton.disabled = true;
+            }
+
+            document.getElementById('surveyForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const calificacion = document.querySelector('input[name="calificacion"]:checked');
+                const comentarios = document.getElementById('comentarios').value;
+
+                if (calificacion) {
+                    submitForm('srv/encuesta-agrega.php', event)
+                        .then(respuesta => {
+                            console.log('Encuesta guardada en BD:', respuesta);
+                            document.getElementById('surveyForm').style.display = 'none';
+                            document.getElementById('mensajeEnvio').style.display = 'block';
+                        })
+                        .catch(error => {
+                            console.error('Error al guardar encuesta en BD:', error);
+                            showMessageBox('Error', 'Hubo un problema al enviar la encuesta. Por favor, inténtalo de nuevo.', 'error');
+                        });
+                } else {
+                    showMessageBox('Error de Validación', 'Por favor, selecciona una calificación.', 'error');
+                }
+            });
+        });
+
+        const MQTT_BROKER = "test.mosquitto.org";
+        const MQTT_PORT = 8081; // Puerto WebSocket para Paho JS (con SSL)
+        const MQTT_TOPIC_SURVEY_COMPLETED = "bytelink/IoT/encuesta/completada";
+        const MQTT_TOPIC_SURVEY_DATA = "bytelink/IoT/encuesta/datos"; // Tópico para los datos completos de la encuesta
+
+        let client = null;
+
+        function connectMqtt() {
+            const clientId = "web-survey-client-" + parseInt(Math.random() * 100000000);
+            client = new Paho.MQTT.Client(MQTT_BROKER, MQTT_PORT, clientId);
+
+            client.onConnectionLost = function (responseObject) {
+                if (responseObject.errorCode !== 0) {
+                    console.log("Conexión MQTT perdida: " + responseObject.errorMessage);
+                }
+            };
+
+            client.onMessageArrived = function (message) {
+                console.log("Mensaje MQTT recibido: " + message.payloadString + " en tópico " + message.destinationName);
+            };
+
+
+            client.connect({
+                onSuccess: function () {
+                    console.log("Conectado a MQTT para la encuesta.");
+                },
+                onFailure: function (responseObject) {
+                    console.log("Fallo al conectar a MQTT para la encuesta: " + responseObject.errorMessage);
+                },
+                useSSL: true,
+                uris: [`wss://${MQTT_BROKER}:${MQTT_PORT}/mqtt`],
+                keepAliveInterval: 10
+            });
+        }
+
+        function sendSurveyData(calificacion, comentarios) {
+            if (!client || !client.isConnected()) {
+                console.error("Cliente MQTT no conectado. No se pueden enviar los datos de la encuesta.");
+                alert("Error de conexión. Intenta de nuevo más tarde.");
+                return;
+            }
+
+            const messageCompleted = new Paho.MQTT.Message("encuesta_completada");
+            messageCompleted.destinationName = MQTT_TOPIC_SURVEY_COMPLETED;
+            client.send(messageCompleted);
+            console.log("Enviado mensaje 'encuesta_completada' al broker.");
+
+            // Enviar los datos completos de la encuesta (para la PWA)
+            const surveyData = {
+                calificacion: calificacion,
+                comentarios: comentarios,
+                timestamp: new Date().toISOString()
+            };
+            const messageData = new Paho.MQTT.Message(JSON.stringify(surveyData));
+            messageData.destinationName = MQTT_TOPIC_SURVEY_DATA;
+            client.send(messageData);
+            console.log("Enviados datos de la encuesta a tópico 'bytelink/IoT/encuesta/datos'.", surveyData);
+        }
+
+        document.getElementById('surveyForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const calificacion = document.querySelector('input[name="calificacion"]:checked');
+            const comentarios = document.getElementById('comentarios').value;
+
+            if (calificacion) {
+                sendSurveyData(calificacion.value, comentarios);
+                document.getElementById('surveyForm').style.display = 'none';
+                document.getElementById('mensajeEnvio').style.display = 'block';
+            } else {
+                alert('Por favor, selecciona una calificación.');
+            }
+        });
+        // Conectar a MQTT al cargar la página
+        window.onload = connectMqtt;
+    </script>
+</body>
+
+</html>
